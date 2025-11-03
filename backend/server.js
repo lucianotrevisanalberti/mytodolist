@@ -22,12 +22,18 @@ app.post('/tarefas', (req, res) => {
   res.json(nova);
 });
 
+app.delete("/tarefas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  tarefas = tarefas.filter((t) => t.id !== id);
+  res.status(204).send(); // 204 = No Content
+});
+
 // --- FRONT-END BUILD ---
 // Isto serve o build do React pela mesma porta do Node
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 // --- INICIA SERVIDOR ---
