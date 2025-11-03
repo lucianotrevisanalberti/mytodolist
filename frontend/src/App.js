@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [tarefas, setTarefas] = useState([]);
-  const [texto, setTexto] = useState("");
+  const [nome, setNome] = useState("");
 
   const API = "/tarefas"; // substitua pela URL real da API
 
@@ -16,11 +16,11 @@ function App() {
     const resp = await fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ texto })
+      body: JSON.stringify({ nome })
     });
     const nova = await resp.json();
     setTarefas([...tarefas, nova]);
-    setTexto("");
+    setNome("");
   };
 
   const remover = async (id) => {
@@ -33,8 +33,8 @@ function App() {
       <h1>Minha Lista de Tarefas</h1>
 
       <input
-        value={texto}
-        onChange={e => setTexto(e.target.value)}
+        value={nome}
+        onChange={e => setNome(e.target.value)}
         placeholder="Nova tarefa"
       />
       <button onClick={adicionar}>Adicionar</button>
@@ -42,7 +42,7 @@ function App() {
       <ul>
         {tarefas.map(t => (
           <li key={t.id}>
-            {t.texto}{" "}
+            {t.nome}{" "}
             <button onClick={() => remover(t.id)}>x</button>
           </li>
         ))}
